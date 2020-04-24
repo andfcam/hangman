@@ -7,19 +7,20 @@ class Hangman {
         this.domWord = document.getElementById("word");
         this.domMisses = document.getElementById("misses");
         this.domFeedback = document.getElementById("feedback");
+        this.domKeyboard = document.getElementById("keyboard");
     }
 
     start = () => {
         this.setup();
-        document.onkeypress = (event) => this.guess(this.convertToChar(event));
+        document.onkeypress = (event) =>
+            this.guess(this.convertToChar(event.keyCode));
     };
 
-    convertToChar = (event) => String.fromCharCode(event.keyCode).toUpperCase();
+    convertToChar = (keyCode) => String.fromCharCode(keyCode).toUpperCase();
 
     setup = () => {
-        this.lettersInWord.forEach(
-            () => (this.domWord.innerHTML += `<span>_</span>`)
-        );
+        this.displayUnderscores();
+        this.createKeyboard();
     };
 
     guess = (letter) => {
@@ -38,6 +39,20 @@ class Hangman {
             if (element === letter) indices.push(index);
             return indices;
         }, []);
+    };
+
+    createKeyboard = () => {
+        for (let keyCode = 65; keyCode <= 90; keyCode++) {
+            this.domKeyboard.innerHTML += `<span class="key">
+            ${this.convertToChar(keyCode)}
+            </span>`;
+        }
+    };
+
+    displayUnderscores = () => {
+        this.lettersInWord.forEach(
+            () => (this.domWord.innerHTML += `<span>_</span>`)
+        );
     };
 
     displayLetters = (indices, letter) => {
