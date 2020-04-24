@@ -16,18 +16,18 @@ class Hangman {
     convertToChar = (event) => String.fromCharCode(event.keyCode).toUpperCase();
 
     setup = () => {
-        this.lettersInWord.forEach(() => {
-            this.domWord.innerHTML += `<span>_</span>`;
-        });
+        this.lettersInWord.forEach(
+            () => (this.domWord.innerHTML += `<span>_</span>`)
+        );
     };
 
     guess = (letter) => {
-        const occurences = this.allIndicesOf(letter);
-        if (occurences.length) {
-            console.log(occurences);
+        const indices = this.allIndicesOf(letter);
+        if (indices.length) {
+            this.displayLetters(indices, letter);
         } else {
             this.incorrectGuesses++;
-            console.log(this.incorrectGuesses);
+            this.displayMiss();
         }
     };
 
@@ -37,7 +37,14 @@ class Hangman {
             return indices;
         }, []);
     };
+
+    displayLetters = (indices, letter) => {
+        indices.forEach((index) => {
+            this.domWord.childNodes[index].innerText = letter;
+        });
+    };
+
+    displayMiss = () => (this.domMisses.innerText += "X");
 }
 
-// If it is - display it
 // If you miss 6 times, it's game over
