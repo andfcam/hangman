@@ -1,9 +1,13 @@
 window.onload = () => {
-    const wordToGuess = "hangman".toUpperCase();
-    document.onkeypress = (event) => console.log(event.keyCode);
+    const wordToGuess = "hangman";
+    const lettersArray = wordToGuess.toUpperCase().split("");
+
+    document.onkeypress = (event) => {
+        const guessedLetter = String.fromCharCode(event.keyCode);
+        console.log(guessedLetter);
+    };
 };
 
-// User can input a key as a guess
 // Check if the input letter is in the word
 // If it is - display it
 // If it isn't - increase no. of misses
