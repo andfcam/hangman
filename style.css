@@ -6,7 +6,18 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-main > div span:first-child {
+main > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+main > div span {
+  margin: 0 3px;
+}
+
+main > div > span {
+  margin: 0;
   display: inline-block;
   width: 50px;
 }

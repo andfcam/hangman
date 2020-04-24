@@ -7,7 +7,14 @@
 
 main {
     > div {
-        span:first-child {
+        display: flex;
+
+        span {
+            margin: 0 3px;
+        }
+
+        > span {
+            margin: 0;
             display: inline-block;
             width: 50px;
         }
