@@ -9,10 +9,10 @@ class Hangman {
 
     start = () => {
         this.setup();
-        document.onkeypress = (event) => {
-            this.guess(String.fromCharCode(event.keyCode));
-        };
+        document.onkeypress = (event) => this.guess(this.convertToChar(event));
     };
+
+    convertToChar = (event) => String.fromCharCode(event.keyCode).toUpperCase();
 
     setup = () => {
         this.lettersInWord.forEach((letter) => {
@@ -21,11 +21,15 @@ class Hangman {
     };
 
     guess = (letter) => {
-        if (this.lettersInWord.includes(letter.toUpperCase())) {
-            console.log(true);
-        } else {
-            console.log(false);
-        }
+        const occurences = this.allIndices(letter);
+        console.log(occurences);
+    };
+
+    allIndices = (letter) => {
+        return this.lettersInWord.reduce((indices, element, index) => {
+            if (element === letter) indices.push(index);
+            return indices;
+        }, []);
     };
 }
 
