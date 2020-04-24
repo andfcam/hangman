@@ -1,9 +1,8 @@
 window.onload = () => {
     const wordToGuess = "hangman".toUpperCase();
-    console.log(wordToGuess);
+    document.onkeypress = (event) => console.log(event.keyCode);
 };
 
-// Start with 'HANGMAN' as fixed word
 // User can input a key as a guess
 // Check if the input letter is in the word
 // If it is - display it
