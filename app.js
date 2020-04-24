@@ -4,7 +4,11 @@ window.onload = () => {
 
     document.onkeypress = (event) => {
         const guessedLetter = String.fromCharCode(event.keyCode);
-        console.log(guessedLetter);
+        if (lettersArray.includes(guessedLetter.toUpperCase())) {
+            console.log("Correct");
+        } else {
+            console.log("Incorrect");
+        }
     };
 };
 
