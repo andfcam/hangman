@@ -6,6 +6,7 @@ class Hangman {
 
         this.domWord = document.getElementById("word");
         this.domMisses = document.getElementById("misses");
+        this.domFeedback = document.getElementById("feedback");
     }
 
     start = () => {
@@ -28,6 +29,7 @@ class Hangman {
         } else {
             this.incorrectGuesses++;
             this.displayMiss();
+            if (this.incorrectGuesses >= 6) this.stop();
         }
     };
 
@@ -45,6 +47,11 @@ class Hangman {
     };
 
     displayMiss = () => (this.domMisses.innerText += "X");
+
+    stop = () => {
+        this.domFeedback.innerText = "Game Over";
+        document.onkeypress = null;
+    };
 }
 
 // If you miss 6 times, it's game over
