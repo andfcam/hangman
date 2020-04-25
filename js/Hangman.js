@@ -1,33 +1,40 @@
 class Hangman {
     constructor(words, lives) {
-        this.wordToGuess = this.selectRandomWordFrom(words);
-        this.lettersInWord = this.wordToGuess.toUpperCase().split("");
-
+        this.words = words;
         this.lives = lives;
-        this.incorrectGuesses = 0;
+
+        this.keyboard = new Keyboard(this, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
         this.domWord = document.getElementById("word");
-        this.domBlanks = this.createBlanks();
         this.domMisses = document.getElementById("misses");
         this.domFeedback = document.getElementById("feedback");
     }
 
     start = () => {
-        this.keyboard = new Keyboard(this, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        this.setNewWord();
+        this.resetGuesses();
         this.keyboard.respondToUserInput();
     };
 
-    selectRandomWordFrom = (words) => {
-        const index = Math.floor(Math.random() * words.length);
-        return words[index];
+    setNewWord = () => {
+        this.wordToGuess = this.selectRandomWordFrom(words);
+        this.lettersToGuess = this.wordToGuess.toUpperCase().split("");
+        this.createBlanks(this.lettersToGuess);
     };
 
-    createBlanks = () => {
-        this.lettersInWord.forEach(() => {
+    selectRandomWordFrom = (words) => {
+        const random = Math.floor(Math.random() * words.length);
+        return words[random];
+    };
+
+    createBlanks = (letters) => {
+        letters.forEach(() => {
             this.domWord.innerHTML += `<span class="blank">&nbsp;</span>`;
         });
-        return document.querySelectorAll(".blank");
+        this.domBlanks = document.querySelectorAll(".blank");
     };
+
+    resetGuesses = () => (this.incorrectGuesses = 0);
 
     guess = (letter) => {
         this.guessIsCorrect(letter)
@@ -36,7 +43,7 @@ class Hangman {
     };
 
     indicesOf = (letter) => {
-        return this.lettersInWord.reduce((indices, element, index) => {
+        return this.lettersToGuess.reduce((indices, element, index) => {
             if (element === letter) indices.push(index);
             return indices;
         }, []);
@@ -50,7 +57,7 @@ class Hangman {
 
     revealAllLetters = () => {
         this.domBlanks.forEach((blank, index) => {
-            blank.innerText = this.lettersInWord[index];
+            blank.innerText = this.lettersToGuess[index];
         });
     };
 

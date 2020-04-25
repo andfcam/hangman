@@ -13,11 +13,6 @@
   src: url("../static/fonts/Barlow-Medium.ttf");
 }
 
-@font-face {
-  font-family: "Barlow Light";
-  src: url("../static/fonts/Barlow-Light.ttf");
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -38,7 +33,7 @@ body header h1 {
 }
 
 body main #word {
-  margin: 20px 0;
+  margin: 30px 0;
   font-size: 24px;
 }
 
