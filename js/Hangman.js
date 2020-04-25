@@ -34,7 +34,7 @@ class Hangman {
 
     displayUnderscores = () => {
         this.lettersInWord.forEach(
-            () => (this.domWord.innerHTML += `<span>_</span>`)
+            () => (this.domWord.innerHTML += `<span>&nbsp;</span>`)
         );
     };
 
@@ -52,15 +52,15 @@ class Hangman {
         if (this.incorrectGuesses >= this.lives) this.stop();
     };
 
-    displayMiss = () => (this.domMisses.innerText += "X");
+    displayMiss = () => (this.domMisses.innerHTML += `<span>X</span>`);
 
     stop = () => {
-        this.domFeedback.innerText = "Game Over";
         this.keyboard.ignoreUserInput();
+        this.domFeedback.innerText = "Game over!";
     };
 }
 
-// Define number of lives and count down
+// Define number of lives, display and count down
 // Able to define word to guess first
 // Able to take random word (predefined in array)
 // Able to take random word (from dictionary api)

@@ -1,41 +1,98 @@
+@font-face {
+    font-family: "Barlow Black";
+    src: url("../static/fonts/Barlow-Black.ttf");
+}
+
+@font-face {
+    font-family: "Barlow Bold";
+    src: url("../static/fonts/Barlow-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Barlow";
+    src: url("../static/fonts/Barlow-Medium.ttf");
+}
+
+@font-face {
+    font-family: "Barlow Light";
+    src: url("../static/fonts/Barlow-Light.ttf");
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
 }
 
-main {
-    > div {
-        display: flex;
+body {
+    padding: 20px;
+    text-align: center;
 
-        span {
-            margin: 0 3px;
-        }
-
-        > span {
-            margin: 0;
-            display: inline-block;
-            width: 50px;
+    header {
+        h1 {
+            font-family: "Barlow Black";
+            font-size: 40px;
         }
     }
 
-    #keyboard {
-        text-align: center;
+    main {
+        #word {
+            margin: 20px 0;
+            font-size: 24px;
 
-        .key {
-            cursor: pointer;
-
-            &:hover {
-                color: orange;
+            span {
+                display: inline-block;
+                width: 30px;
+                margin: 0 5px;
+                border-bottom: 2px solid grey;
             }
+        }
 
-            &.correct {
-                color: lime;
+        #misses {
+            font-size: 24px;
+
+            span {
+                font-family: "Barlow Bold";
             }
+        }
 
-            &.incorrect {
-                color: red;
+        #keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 24px;
+            line-height: 40px;
+            max-width: 400px;
+            margin: 20px auto;
+
+            .key {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+                margin: 5px;
+                background-color: peachpuff;
+                font-family: "Barlow Bold";
+                cursor: pointer;
+
+                &:hover {
+                    color: white;
+                }
+
+                &.correct,
+                &.incorrect {
+                    color: white;
+                }
+
+                &.correct {
+                    background-color: limegreen;
+                }
+
+                &.incorrect {
+                    background-color: #eeeeee;
+                }
             }
         }
     }
