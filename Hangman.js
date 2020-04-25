@@ -1,27 +1,18 @@
 class Hangman {
     constructor(word) {
         this.word = word;
-        this.incorrectGuesses = 0;
         this.lettersInWord = word.toUpperCase().split("");
+        this.incorrectGuesses = 0;
 
         this.domWord = document.getElementById("word");
         this.domMisses = document.getElementById("misses");
         this.domFeedback = document.getElementById("feedback");
-        this.domKeyboard = document.getElementById("keyboard");
     }
 
     start = () => {
-        this.setup();
-        document.onkeypress = (event) => {
-            this.guess(this.convertToChar(event.keyCode));
-        };
-    };
-
-    convertToChar = (keyCode) => String.fromCharCode(keyCode).toUpperCase();
-
-    setup = () => {
         this.displayUnderscores();
-        this.createKeyboard();
+        this.keyboard = new Keyboard(this);
+        this.keyboard.generate();
     };
 
     guess = (letter) => {
@@ -38,30 +29,6 @@ class Hangman {
             if (element === letter) indices.push(index);
             return indices;
         }, []);
-    };
-
-    createKeyboard = () => {
-        this.createKeys();
-        this.respondToUserInput();
-    };
-
-    createKeys = () => {
-        for (let keyCode = 65; keyCode <= 90; keyCode++) {
-            this.domKeyboard.innerHTML += this.domKey(keyCode);
-        }
-    };
-
-    domKey = (keyCode) => {
-        return `<span class="key">
-                ${this.convertToChar(keyCode)}
-                </span>`;
-    };
-
-    respondToUserInput = () => {
-        const keys = document.querySelectorAll(".key");
-        keys.forEach((key) => {
-            key.onclick = (event) => this.guess(event.target.innerText);
-        });
     };
 
     displayUnderscores = () => {
@@ -86,7 +53,7 @@ class Hangman {
 
     stop = () => {
         this.domFeedback.innerText = "Game Over";
-        document.onkeypress = null;
+        this.keyboard.ignoreUserInput();
     };
 }
 
