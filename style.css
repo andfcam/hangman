@@ -25,4 +25,12 @@ main > div > span {
 main #keyboard {
   text-align: center;
 }
+
+main #keyboard .key {
+  cursor: pointer;
+}
+
+main #keyboard .key:hover {
+  color: orange;
+}
 /*# sourceMappingURL=style.css.map */

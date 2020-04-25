@@ -12,8 +12,9 @@ class Hangman {
 
     start = () => {
         this.setup();
-        document.onkeypress = (event) =>
+        document.onkeypress = (event) => {
             this.guess(this.convertToChar(event.keyCode));
+        };
     };
 
     convertToChar = (keyCode) => String.fromCharCode(keyCode).toUpperCase();
@@ -28,9 +29,7 @@ class Hangman {
         if (indices.length) {
             this.displayLetters(indices, letter);
         } else {
-            this.incorrectGuesses++;
-            this.displayMiss();
-            if (this.incorrectGuesses >= 6) this.stop();
+            this.handleIncorrectGuess();
         }
     };
 
@@ -43,8 +42,7 @@ class Hangman {
 
     createKeyboard = () => {
         this.createKeys();
-        this.domKeys = document.querySelectorAll(".key");
-        console.log(this.domKeys);
+        this.respondToUserInput();
     };
 
     createKeys = () => {
@@ -59,6 +57,13 @@ class Hangman {
                 </span>`;
     };
 
+    respondToUserInput = () => {
+        const keys = document.querySelectorAll(".key");
+        keys.forEach((key) => {
+            key.onclick = (event) => this.guess(event.target.innerText);
+        });
+    };
+
     displayUnderscores = () => {
         this.lettersInWord.forEach(
             () => (this.domWord.innerHTML += `<span>_</span>`)
@@ -71,6 +76,12 @@ class Hangman {
         });
     };
 
+    handleIncorrectGuess = () => {
+        this.incorrectGuesses++;
+        this.displayMiss();
+        if (this.incorrectGuesses >= 6) this.stop();
+    };
+
     displayMiss = () => (this.domMisses.innerText += "X");
 
     stop = () => {
@@ -79,10 +90,8 @@ class Hangman {
     };
 }
 
-// Make virtual keyboard
-// Add onclick event that displays the key
 // Toggle classes to show whether letter is correct or not
-// Create a separate UI class to handle dom
+// Create a separate UI class (and keyboard class?) to handle dom
 
 // Define number of lives and count down
 // Able to define word to guess first

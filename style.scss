@@ -22,5 +22,13 @@ main {
 
     #keyboard {
         text-align: center;
+
+        .key {
+            cursor: pointer;
+
+            &:hover {
+                color: orange;
+            }
+        }
     }
 }
