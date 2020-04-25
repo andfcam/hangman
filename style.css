@@ -21,4 +21,8 @@ main > div > span {
   display: inline-block;
   width: 50px;
 }
+
+main #keyboard {
+  text-align: center;
+}
 /*# sourceMappingURL=style.css.map */

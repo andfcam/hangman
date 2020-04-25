@@ -42,11 +42,21 @@ class Hangman {
     };
 
     createKeyboard = () => {
+        this.createKeys();
+        this.domKeys = document.querySelectorAll(".key");
+        console.log(this.domKeys);
+    };
+
+    createKeys = () => {
         for (let keyCode = 65; keyCode <= 90; keyCode++) {
-            this.domKeyboard.innerHTML += `<span class="key">
-            ${this.convertToChar(keyCode)}
-            </span>`;
+            this.domKeyboard.innerHTML += this.domKey(keyCode);
         }
+    };
+
+    domKey = (keyCode) => {
+        return `<span class="key">
+                ${this.convertToChar(keyCode)}
+                </span>`;
     };
 
     displayUnderscores = () => {
@@ -69,4 +79,19 @@ class Hangman {
     };
 }
 
-// If you miss 6 times, it's game over
+// Make virtual keyboard
+// Add onclick event that displays the key
+// Toggle classes to show whether letter is correct or not
+// Create a separate UI class to handle dom
+
+// Define number of lives and count down
+// Able to define word to guess first
+// Able to take random word (predefined in array)
+// Able to take random word (from dictionary api)
+// Able to specify length of word
+// Hint (taken from dictionary api)
+
+// Timed
+// Visual representation of hangman
+// Improve css
+// TESTING
