@@ -1,8 +1,9 @@
 # Hangman
 A basic implementation of Hangman in JavaScript as described by the Landmark Solutions tech test.
+![Game Demonstration](static/demo/demo.gif)
 
 ## General info
-This project is simple Lorem ipsum dolor generator.
+More detail about the project, functionality and code.
 
 List of example words:
 ```
