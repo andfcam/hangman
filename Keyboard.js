@@ -1,31 +1,25 @@
 class Keyboard {
-    constructor(game) {
+    constructor(game, keys) {
         this.game = game;
+        this.keys = keys.toUpperCase();
 
         this.domKeyboard = document.getElementById("keyboard");
+        this.createKeys();
     }
 
-    generate = () => {
-        this.createKeys();
-        this.respondToUserInput();
-    };
-
     createKeys = () => {
-        for (let keyCode = 65; keyCode <= 90; keyCode++) {
-            this.domKeyboard.innerHTML += this.domKey(keyCode);
-        }
+        this.keys.split("").forEach((key) => {
+            this.domKeyboard.innerHTML += this.domKey(key);
+        });
         this.domKeys = document.querySelectorAll(".key");
     };
 
-    domKey = (keyCode) => {
-        return `<span class="key">
-                ${this.convertToChar(keyCode)}
-                </span>`;
-    };
+    domKey = (key) => `<span class="key">${key}</span>`;
 
     respondToUserInput = () => {
         document.onkeypress = (event) => {
-            this.game.guess(this.convertToChar(event.keyCode));
+            const char = this.convertToChar(event.keyCode);
+            if (this.guessIsValid(char)) this.game.guess(char);
         };
         this.domKeys.forEach((key) => {
             key.onclick = (event) => this.game.guess(event.target.innerText);
@@ -36,6 +30,8 @@ class Keyboard {
         document.onkeypress = null;
         this.domKeys.forEach((key) => (key.onclick = null));
     };
+
+    guessIsValid = (char) => this.keys.includes(char);
 
     convertToChar = (keyCode) => String.fromCharCode(keyCode).toUpperCase();
 }

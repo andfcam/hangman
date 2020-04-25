@@ -11,8 +11,8 @@ class Hangman {
 
     start = () => {
         this.displayUnderscores();
-        this.keyboard = new Keyboard(this);
-        this.keyboard.generate();
+        this.keyboard = new Keyboard(this, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        this.keyboard.respondToUserInput();
     };
 
     guess = (letter) => {
