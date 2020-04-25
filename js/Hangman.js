@@ -42,16 +42,22 @@ class Hangman {
         }, []);
     };
 
-    displayLetters = (indices, letter) => {
+    revealLetters = (indices, letter) => {
         indices.forEach((index) => {
             this.domBlanks[index].innerText = letter;
+        });
+    };
+
+    revealAllLetters = () => {
+        this.domBlanks.forEach((blank, index) => {
+            blank.innerText = this.lettersInWord[index];
         });
     };
 
     guessIsCorrect = (letter) => this.indicesOf(letter).length;
 
     handleCorrectGuess = (letter) => {
-        this.displayLetters(this.indicesOf(letter), letter);
+        this.revealLetters(this.indicesOf(letter), letter);
         if (this.playerHasWon) this.endGame("You won!");
     };
 
@@ -75,19 +81,15 @@ class Hangman {
 
     endGame = (message) => {
         this.keyboard.ignoreUserInput();
+        this.revealAllLetters();
         this.domFeedback.innerText = message;
     };
 }
 
 // Create a separate UI class to handle dom
 
-// Word options: User input, Landmark themed
-
-// Able to define word to guess first
-// when lose, show word
 // Restart game
 
-// Word defined/fetched before initialising game?
 // Define number of lives, display and count down
 
 // TESTING
