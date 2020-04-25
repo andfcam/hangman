@@ -3,24 +3,20 @@ class Hangman {
         this.words = words;
         this.lives = lives;
 
-        this.keyboard = new Keyboard(this, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
-        this.domWord = document.getElementById("word");
-        this.domMisses = document.getElementById("misses");
-        this.domLives = document.getElementById("lives");
+        this.ui = new UI(this);
     }
 
     reset = () => {
         this.setNewWord();
         this.setGuessesTo(0);
-        this.keyboard.reset();
-        this.keyboard.respondToUserInput();
+        this.ui.keyboard.reset();
+        this.ui.keyboard.respondToUserInput();
     };
 
     setNewWord = () => {
         this.wordToGuess = this.selectRandomWordFrom(words);
         this.lettersToGuess = this.wordToGuess.toUpperCase().split("");
-        this.generateBlanks();
+        this.ui.generateBlanks();
     };
 
     selectRandomWordFrom = (words) => {
@@ -28,23 +24,13 @@ class Hangman {
         return words[random];
     };
 
-    generateBlanks = () => {
-        this.removeBlanks();
-        const span = `<span class="blank">&nbsp;</span>`;
-        this.domWord.innerHTML = span.repeat(this.numberOfLetters);
-        this.domBlanks = document.querySelectorAll(".blank");
-    };
-
-    removeBlanks = () => (this.domWord.innerHTML = "");
-
     get numberOfLetters() {
         return this.lettersToGuess.length;
     }
 
     setGuessesTo = (numberOfGuesses) => {
         this.incorrectGuesses = numberOfGuesses;
-        this.domLives.innerText = this.lives - numberOfGuesses;
-        this.domMisses.innerHTML = `<span>X</span>`.repeat(numberOfGuesses);
+        this.ui.updateLives();
     };
 
     guess = (letter) => {
@@ -56,7 +42,7 @@ class Hangman {
     guessIsCorrect = (letter) => this.indicesOf(letter).length;
 
     handleCorrectGuess = (letter) => {
-        this.revealLetters(this.indicesOf(letter), letter);
+        this.ui.revealLetters(this.indicesOf(letter), letter);
         if (this.playerHasWon) this.endGame("Congratulations, you win!");
     };
 
@@ -65,23 +51,11 @@ class Hangman {
         if (this.playerHasLost) this.endGame("Unlucky! Game over. Play again?");
     };
 
-    indicesOf = (letter) => {
-        return this.lettersToGuess.reduce((indices, element, index) => {
-            if (element === letter) indices.push(index);
+    indicesOf = (input) => {
+        return this.lettersToGuess.reduce((indices, letter, index) => {
+            if (letter === input) indices.push(index);
             return indices;
         }, []);
-    };
-
-    revealLetters = (indices, letter) => {
-        indices.forEach((index) => {
-            this.domBlanks[index].innerText = letter;
-        });
-    };
-
-    revealAllLetters = () => {
-        this.domBlanks.forEach((blank, index) => {
-            blank.innerText = this.lettersToGuess[index];
-        });
     };
 
     get playerHasLost() {
@@ -89,19 +63,17 @@ class Hangman {
     }
 
     get playerHasWon() {
-        return Array.from(this.domBlanks).every((blank) => {
+        return Array.from(this.ui.blanks).every((blank) => {
             return /[A-Z]/.test(blank.innerText);
         });
     }
 
     endGame = (message) => {
-        this.keyboard.ignoreUserInput();
-        this.revealAllLetters();
+        this.ui.keyboard.ignoreUserInput();
+        this.ui.revealAllLetters();
         alert(message);
     };
 }
-
-// Create a separate UI class to handle dom
 
 // TESTING
 // README

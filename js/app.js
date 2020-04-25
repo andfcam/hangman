@@ -16,6 +16,4 @@ const words = [
 window.onload = () => {
     const hangman = new Hangman(words, 6);
     hangman.reset();
-
-    document.getElementById("restart").onclick = hangman.reset;
 };
