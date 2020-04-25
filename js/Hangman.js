@@ -7,12 +7,12 @@ class Hangman {
 
         this.domWord = document.getElementById("word");
         this.domMisses = document.getElementById("misses");
-        this.domFeedback = document.getElementById("feedback");
     }
 
-    start = () => {
+    reset = () => {
         this.setNewWord();
         this.resetGuesses();
+        this.keyboard.reset();
         this.keyboard.respondToUserInput();
     };
 
@@ -28,18 +28,39 @@ class Hangman {
     };
 
     createBlanks = (letters) => {
+        this.removeBlanks();
         letters.forEach(() => {
             this.domWord.innerHTML += `<span class="blank">&nbsp;</span>`;
         });
         this.domBlanks = document.querySelectorAll(".blank");
     };
 
-    resetGuesses = () => (this.incorrectGuesses = 0);
+    resetGuesses = () => {
+        this.incorrectGuesses = 0;
+        this.removeMisses();
+    };
+
+    removeBlanks = () => (this.domWord.innerHTML = "");
+
+    removeMisses = () => (this.domMisses.innerHTML = "");
 
     guess = (letter) => {
         this.guessIsCorrect(letter)
             ? this.handleCorrectGuess(letter)
             : this.handleIncorrectGuess();
+    };
+
+    guessIsCorrect = (letter) => this.indicesOf(letter).length;
+
+    handleCorrectGuess = (letter) => {
+        this.revealLetters(this.indicesOf(letter), letter);
+        if (this.playerHasWon) this.endGame("You won!");
+    };
+
+    handleIncorrectGuess = () => {
+        this.incorrectGuesses++;
+        this.incrementMisses();
+        if (this.playerHasLost) this.endGame("Game over!");
     };
 
     indicesOf = (letter) => {
@@ -61,19 +82,6 @@ class Hangman {
         });
     };
 
-    guessIsCorrect = (letter) => this.indicesOf(letter).length;
-
-    handleCorrectGuess = (letter) => {
-        this.revealLetters(this.indicesOf(letter), letter);
-        if (this.playerHasWon) this.endGame("You won!");
-    };
-
-    handleIncorrectGuess = () => {
-        this.incorrectGuesses++;
-        this.incrementMisses();
-        if (this.playerHasLost) this.endGame("Game over!");
-    };
-
     incrementMisses = () => (this.domMisses.innerHTML += `<span>X</span>`);
 
     get playerHasLost() {
@@ -89,7 +97,7 @@ class Hangman {
     endGame = (message) => {
         this.keyboard.ignoreUserInput();
         this.revealAllLetters();
-        this.domFeedback.innerText = message;
+        alert(message);
     };
 }
 
