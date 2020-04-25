@@ -1,7 +1,7 @@
 class Hangman {
-    constructor(word) {
-        this.word = word;
-        this.lettersInWord = word.toUpperCase().split("");
+    constructor() {
+        this.wordToGuess = this.getLandmarkWord();
+        this.lettersInWord = this.wordToGuess.toUpperCase().split("");
 
         this.incorrectGuesses = 0;
         this.lives = 6;
@@ -15,6 +15,22 @@ class Hangman {
         this.displayUnderscores();
         this.keyboard = new Keyboard(this, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         this.keyboard.respondToUserInput();
+    };
+
+    getLandmarkWord = () => {
+        const words = [
+            "landmark",
+            "information",
+            "solutions",
+            "property",
+            "data",
+            "technology",
+            "angular",
+            "report",
+            "survey",
+        ];
+        const randomIndex = Math.floor(Math.random() * words.length);
+        return words[randomIndex];
     };
 
     guess = (letter) => {
@@ -49,8 +65,12 @@ class Hangman {
     handleIncorrectGuess = () => {
         this.incorrectGuesses++;
         this.displayMiss();
-        if (this.incorrectGuesses >= this.lives) this.stop();
+        if (this.playerHasLost) this.stop();
     };
+
+    get playerHasLost() {
+        return this.incorrectGuesses >= this.lives;
+    }
 
     displayMiss = () => (this.domMisses.innerHTML += `<span>X</span>`);
 
@@ -60,12 +80,16 @@ class Hangman {
     };
 }
 
-// Define number of lives, display and count down
+// Word options: User input, Landmark themed, From dictionary
+
+// Game won event
 // Able to define word to guess first
-// Able to take random word (predefined in array)
 // Able to take random word (from dictionary api)
 // Able to specify length of word
 // Hint (taken from dictionary api)
+
+// Word defined/fetched before initialising game
+// Define number of lives, display and count down
 
 // Create a separate UI class to handle dom?
 

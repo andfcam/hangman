@@ -4,14 +4,14 @@ class Keyboard {
         this.keys = keys.toUpperCase();
 
         this.domKeyboard = document.getElementById("keyboard");
-        this.createKeys();
+        this.domKeys = this.createKeys();
     }
 
     createKeys = () => {
         this.keys.split("").forEach((key) => {
             this.domKeyboard.innerHTML += `<span class="key">${key}</span>`;
         });
-        this.domKeys = document.querySelectorAll(".key");
+        return document.querySelectorAll(".key");
     };
 
     respondToUserInput = () => {

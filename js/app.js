@@ -1,4 +1,4 @@
 window.onload = () => {
-    const game = new Hangman("hangman");
+    const game = new Hangman();
     game.start();
 };
