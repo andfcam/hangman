@@ -1,23 +1,23 @@
 class Hangman {
     constructor() {
-        this.wordToGuess = this.getLandmarkWord();
+        this.wordToGuess = this.generateLandmarkWord();
         this.lettersInWord = this.wordToGuess.toUpperCase().split("");
 
         this.incorrectGuesses = 0;
         this.lives = 6;
 
         this.domWord = document.getElementById("word");
+        this.domBlanks = this.createBlanks();
         this.domMisses = document.getElementById("misses");
         this.domFeedback = document.getElementById("feedback");
     }
 
     start = () => {
-        this.displayUnderscores();
         this.keyboard = new Keyboard(this, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         this.keyboard.respondToUserInput();
     };
 
-    getLandmarkWord = () => {
+    generateLandmarkWord = () => {
         const words = [
             "landmark",
             "information",
@@ -33,12 +33,17 @@ class Hangman {
         return words[randomIndex];
     };
 
+    createBlanks = () => {
+        this.lettersInWord.forEach(() => {
+            this.domWord.innerHTML += `<span class="blank">&nbsp;</span>`;
+        });
+        return document.querySelectorAll(".blank");
+    };
+
     guess = (letter) => {
-        if (this.guessIsCorrect(letter)) {
-            this.displayLetters(this.indicesOf(letter), letter);
-        } else {
-            this.handleIncorrectGuess();
-        }
+        this.guessIsCorrect(letter)
+            ? this.handleCorrectGuess(letter)
+            : this.handleIncorrectGuess();
     };
 
     indicesOf = (letter) => {
@@ -48,52 +53,59 @@ class Hangman {
         }, []);
     };
 
-    displayUnderscores = () => {
-        this.lettersInWord.forEach(
-            () => (this.domWord.innerHTML += `<span>&nbsp;</span>`)
-        );
-    };
-
     displayLetters = (indices, letter) => {
         indices.forEach((index) => {
-            this.domWord.childNodes[index].innerText = letter;
+            this.domBlanks[index].innerText = letter;
         });
     };
 
     guessIsCorrect = (letter) => this.indicesOf(letter).length;
 
+    handleCorrectGuess = (letter) => {
+        this.displayLetters(this.indicesOf(letter), letter);
+        if (this.playerHasWon) this.endGame("You won!");
+    };
+
     handleIncorrectGuess = () => {
         this.incorrectGuesses++;
-        this.displayMiss();
-        if (this.playerHasLost) this.stop();
+        this.incrementMisses();
+        if (this.playerHasLost) this.endGame("Game over!");
     };
+
+    incrementMisses = () => (this.domMisses.innerHTML += `<span>X</span>`);
 
     get playerHasLost() {
         return this.incorrectGuesses >= this.lives;
     }
 
-    displayMiss = () => (this.domMisses.innerHTML += `<span>X</span>`);
+    get playerHasWon() {
+        return Array.from(this.domBlanks).every((blank) => {
+            return /[A-Z]/.test(blank.innerText);
+        });
+    }
 
-    stop = () => {
+    endGame = (message) => {
         this.keyboard.ignoreUserInput();
-        this.domFeedback.innerText = "Game over!";
+        this.domFeedback.innerText = message;
     };
 }
 
+// Create a separate UI class to handle dom
+
 // Word options: User input, Landmark themed, From dictionary
 
-// Game won event
 // Able to define word to guess first
 // Able to take random word (from dictionary api)
 // Able to specify length of word
 // Hint (taken from dictionary api)
+// Restart game
 
-// Word defined/fetched before initialising game
+// Word defined/fetched before initialising game?
 // Define number of lives, display and count down
 
-// Create a separate UI class to handle dom?
-
-// Visual representation of hangman
-// Improve css
+// Visual representation of hangman?
 // TESTING
 // README
+
+// Make repo public
+// Send to Ben
