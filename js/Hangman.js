@@ -7,11 +7,12 @@ class Hangman {
 
         this.domWord = document.getElementById("word");
         this.domMisses = document.getElementById("misses");
+        this.domLives = document.getElementById("lives");
     }
 
     reset = () => {
         this.setNewWord();
-        this.resetGuesses();
+        this.setGuessesTo(0);
         this.keyboard.reset();
         this.keyboard.respondToUserInput();
     };
@@ -19,7 +20,7 @@ class Hangman {
     setNewWord = () => {
         this.wordToGuess = this.selectRandomWordFrom(words);
         this.lettersToGuess = this.wordToGuess.toUpperCase().split("");
-        this.createBlanks(this.lettersToGuess);
+        this.generateBlanks();
     };
 
     selectRandomWordFrom = (words) => {
@@ -27,22 +28,24 @@ class Hangman {
         return words[random];
     };
 
-    createBlanks = (letters) => {
+    generateBlanks = () => {
         this.removeBlanks();
-        letters.forEach(() => {
-            this.domWord.innerHTML += `<span class="blank">&nbsp;</span>`;
-        });
+        const span = `<span class="blank">&nbsp;</span>`;
+        this.domWord.innerHTML = span.repeat(this.numberOfLetters);
         this.domBlanks = document.querySelectorAll(".blank");
-    };
-
-    resetGuesses = () => {
-        this.incorrectGuesses = 0;
-        this.removeMisses();
     };
 
     removeBlanks = () => (this.domWord.innerHTML = "");
 
-    removeMisses = () => (this.domMisses.innerHTML = "");
+    get numberOfLetters() {
+        return this.lettersToGuess.length;
+    }
+
+    setGuessesTo = (numberOfGuesses) => {
+        this.incorrectGuesses = numberOfGuesses;
+        this.domLives.innerText = this.lives - numberOfGuesses;
+        this.domMisses.innerHTML = `<span>X</span>`.repeat(numberOfGuesses);
+    };
 
     guess = (letter) => {
         this.guessIsCorrect(letter)
@@ -54,13 +57,12 @@ class Hangman {
 
     handleCorrectGuess = (letter) => {
         this.revealLetters(this.indicesOf(letter), letter);
-        if (this.playerHasWon) this.endGame("You won!");
+        if (this.playerHasWon) this.endGame("Congratulations, you win!");
     };
 
     handleIncorrectGuess = () => {
-        this.incorrectGuesses++;
-        this.incrementMisses();
-        if (this.playerHasLost) this.endGame("Game over!");
+        this.setGuessesTo(this.incorrectGuesses + 1);
+        if (this.playerHasLost) this.endGame("Unlucky! Game over. Play again?");
     };
 
     indicesOf = (letter) => {
@@ -82,8 +84,6 @@ class Hangman {
         });
     };
 
-    incrementMisses = () => (this.domMisses.innerHTML += `<span>X</span>`);
-
     get playerHasLost() {
         return this.incorrectGuesses >= this.lives;
     }
@@ -102,10 +102,6 @@ class Hangman {
 }
 
 // Create a separate UI class to handle dom
-
-// Restart game
-
-// Define number of lives, display and count down
 
 // TESTING
 // README

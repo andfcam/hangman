@@ -32,8 +32,12 @@ body header h1 {
   font-size: 40px;
 }
 
+body main p {
+  font-size: 15px;
+}
+
 body main #word {
-  margin: 30px 0;
+  margin: 50px 0;
   font-size: 24px;
 }
 
@@ -44,12 +48,8 @@ body main #word span {
   border-bottom: 2px solid grey;
 }
 
-body main #misses {
-  font-size: 24px;
-  height: 30px;
-}
-
 body main #misses span {
+  color: crimson;
   font-family: "Barlow Bold";
 }
 
@@ -69,8 +69,8 @@ body main #keyboard {
 }
 
 body main #keyboard .key {
-  -webkit-transition: 0.1s;
-  transition: 0.1s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -82,7 +82,7 @@ body main #keyboard .key {
 }
 
 body main #keyboard .key:hover {
-  color: white;
+  background-color: #eec6a3;
 }
 
 body main #keyboard .key.correct, body main #keyboard .key.incorrect {
@@ -98,21 +98,21 @@ body main #keyboard .key.incorrect {
 }
 
 body main button {
-  -webkit-transition: 0.1s;
-  transition: 0.1s;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
   height: 40px;
   border-radius: 20px;
   padding: 0 20px;
   margin-top: 30px;
-  background-color: skyblue;
+  background-color: powderblue;
   font-family: "Barlow Bold";
-  font-size: 18px;
+  font-size: 15px;
   cursor: pointer;
   border: none;
   outline: none;
 }
 
 body main button:hover {
-  color: white;
+  background-color: #97ccd3;
 }
 /*# sourceMappingURL=style.css.map */

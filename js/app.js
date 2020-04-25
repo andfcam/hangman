@@ -6,9 +6,11 @@ const words = [
     "data",
     "technology",
     "angular",
-    "report",
+    "reports",
     "survey",
     "hireme",
+    "ordnance",
+    "exeter",
 ];
 
 window.onload = () => {

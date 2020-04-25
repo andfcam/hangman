@@ -33,8 +33,12 @@ body {
     }
 
     main {
+        p {
+            font-size: 15px;
+        }
+
         #word {
-            margin: 30px 0;
+            margin: 50px 0;
             font-size: 24px;
 
             span {
@@ -46,10 +50,8 @@ body {
         }
 
         #misses {
-            font-size: 24px;
-            height: 30px;
-
             span {
+                color: crimson;
                 font-family: "Barlow Bold";
             }
         }
@@ -64,7 +66,7 @@ body {
             margin: 20px auto;
 
             .key {
-                transition: 0.1s;
+                transition: 0.25s;
                 display: inline-block;
                 width: 40px;
                 height: 40px;
@@ -75,7 +77,7 @@ body {
                 cursor: pointer;
 
                 &:hover {
-                    color: white;
+                    background-color: rgb(238, 198, 163);
                 }
 
                 &.correct,
@@ -94,20 +96,20 @@ body {
         }
 
         button {
-            transition: 0.1s;
+            transition: 0.25s;
             height: 40px;
             border-radius: 20px;
             padding: 0 20px;
             margin-top: 30px;
-            background-color: skyblue;
+            background-color: powderblue;
             font-family: "Barlow Bold";
-            font-size: 18px;
+            font-size: 15px;
             cursor: pointer;
             border: none;
             outline: none;
 
             &:hover {
-                color: white;
+                background-color: rgb(151, 204, 211);
             }
         }
     }
