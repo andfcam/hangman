@@ -9,29 +9,54 @@ class Keyboard {
 
     createKeys = () => {
         this.keys.split("").forEach((key) => {
-            this.domKeyboard.innerHTML += this.domKey(key);
+            this.domKeyboard.innerHTML += `<span class="key">${key}</span>`;
         });
         this.domKeys = document.querySelectorAll(".key");
     };
 
-    domKey = (key) => `<span class="key">${key}</span>`;
-
     respondToUserInput = () => {
+        this.respondToKeyPress();
+        this.respondToClick();
+    };
+
+    respondToKeyPress = () => {
         document.onkeypress = (event) => {
             const char = this.convertToChar(event.keyCode);
-            if (this.guessIsValid(char)) this.game.guess(char);
+            if (this.inputIsValid(char)) this.input(char);
         };
+    };
+
+    respondToClick = () => {
         this.domKeys.forEach((key) => {
-            key.onclick = (event) => this.game.guess(event.target.innerText);
+            key.onclick = (event) => this.input(event.target.innerText);
         });
     };
 
     ignoreUserInput = () => {
-        document.onkeypress = null;
-        this.domKeys.forEach((key) => (key.onclick = null));
+        this.ignoreKeyPress();
+        this.ignoreClicks();
     };
 
-    guessIsValid = (char) => this.keys.includes(char);
+    ignoreKeyPress = () => (document.onkeypress = null);
+
+    ignoreClicks = () => this.domKeys.forEach((key) => (key.onclick = null));
+
+    inputIsValid = (char) => this.keys.includes(char);
 
     convertToChar = (keyCode) => String.fromCharCode(keyCode).toUpperCase();
+
+    input = (letter) => {
+        this.game.guess(letter);
+        this.updateKeyFor(letter);
+    };
+
+    getDomKey = (letter) => this.domKeys[this.keys.indexOf(letter)];
+
+    updateKeyFor = (letter) => {
+        const key = this.getDomKey(letter);
+        key.classList.add(
+            this.game.guessIsCorrect(letter) ? "correct" : "incorrect"
+        );
+        key.onclick = null;
+    };
 }

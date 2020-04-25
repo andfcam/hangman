@@ -16,15 +16,14 @@ class Hangman {
     };
 
     guess = (letter) => {
-        const indices = this.allIndicesOf(letter);
-        if (indices.length) {
-            this.displayLetters(indices, letter);
+        if (this.guessIsCorrect(letter)) {
+            this.displayLetters(this.indicesOf(letter), letter);
         } else {
             this.handleIncorrectGuess();
         }
     };
 
-    allIndicesOf = (letter) => {
+    indicesOf = (letter) => {
         return this.lettersInWord.reduce((indices, element, index) => {
             if (element === letter) indices.push(index);
             return indices;
@@ -42,6 +41,8 @@ class Hangman {
             this.domWord.childNodes[index].innerText = letter;
         });
     };
+
+    guessIsCorrect = (letter) => this.indicesOf(letter).length;
 
     handleIncorrectGuess = () => {
         this.incorrectGuesses++;
@@ -67,7 +68,7 @@ class Hangman {
 // Able to specify length of word
 // Hint (taken from dictionary api)
 
-// Timed
 // Visual representation of hangman
 // Improve css
 // TESTING
+// README

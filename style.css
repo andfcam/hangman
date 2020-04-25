@@ -33,4 +33,12 @@ main #keyboard .key {
 main #keyboard .key:hover {
   color: orange;
 }
+
+main #keyboard .key.correct {
+  color: lime;
+}
+
+main #keyboard .key.incorrect {
+  color: red;
+}
 /*# sourceMappingURL=style.css.map */

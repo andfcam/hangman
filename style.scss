@@ -29,6 +29,14 @@ main {
             &:hover {
                 color: orange;
             }
+
+            &.correct {
+                color: lime;
+            }
+
+            &.incorrect {
+                color: red;
+            }
         }
     }
 }
