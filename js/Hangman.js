@@ -2,7 +2,9 @@ class Hangman {
     constructor(word) {
         this.word = word;
         this.lettersInWord = word.toUpperCase().split("");
+
         this.incorrectGuesses = 0;
+        this.lives = 6;
 
         this.domWord = document.getElementById("word");
         this.domMisses = document.getElementById("misses");
@@ -47,7 +49,7 @@ class Hangman {
     handleIncorrectGuess = () => {
         this.incorrectGuesses++;
         this.displayMiss();
-        if (this.incorrectGuesses >= 6) this.stop();
+        if (this.incorrectGuesses >= this.lives) this.stop();
     };
 
     displayMiss = () => (this.domMisses.innerText += "X");
@@ -58,15 +60,14 @@ class Hangman {
     };
 }
 
-// Toggle classes to show whether letter is correct or not
-// Create a separate UI class (and keyboard class?) to handle dom
-
 // Define number of lives and count down
 // Able to define word to guess first
 // Able to take random word (predefined in array)
 // Able to take random word (from dictionary api)
 // Able to specify length of word
 // Hint (taken from dictionary api)
+
+// Create a separate UI class to handle dom?
 
 // Visual representation of hangman
 // Improve css

@@ -41,7 +41,12 @@ class Keyboard {
 
     ignoreClicks = () => this.domKeys.forEach((key) => (key.onclick = null));
 
-    inputIsValid = (char) => this.keys.includes(char);
+    inputIsValid = (char) => {
+        return (
+            this.keys.includes(char) &&
+            !this.getDomKey(char).classList.contains("incorrect")
+        );
+    };
 
     convertToChar = (keyCode) => String.fromCharCode(keyCode).toUpperCase();
 
