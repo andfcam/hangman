@@ -1,4 +1,6 @@
-class Hangman {
+import UI from "./UI.js";
+
+export default class Hangman {
     constructor(words, lives) {
         this.words = words;
         this.lives = lives;
@@ -14,7 +16,7 @@ class Hangman {
     };
 
     setNewWord = () => {
-        this.wordToGuess = this.selectRandomWordFrom(words);
+        this.wordToGuess = this.selectRandomWordFrom(this.words);
         this.lettersToGuess = this.wordToGuess.toUpperCase().split("");
         this.ui.generateBlanks();
     };

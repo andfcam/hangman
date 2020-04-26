@@ -1,4 +1,4 @@
-class Keyboard {
+export default class Keyboard {
     constructor(game, inputs) {
         this.game = game;
         this.inputs = inputs.toUpperCase();

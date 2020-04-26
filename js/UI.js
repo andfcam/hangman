@@ -1,4 +1,6 @@
-class UI {
+import Keyboard from "./Keyboard.js";
+
+export default class UI {
     constructor(game) {
         this.game = game;
         this.keyboard = new Keyboard(game, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");

@@ -1,3 +1,5 @@
+import Hangman from "./Hangman.js";
+
 const words = [
     "landmark",
     "information",
