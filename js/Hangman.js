@@ -77,7 +77,6 @@ export default class Hangman {
     };
 }
 
-// TESTING
 // README
 
 // Make repo public
