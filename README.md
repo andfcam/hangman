@@ -3,7 +3,9 @@ A basic implementation of Hangman in JavaScript as described by the Landmark Sol
 ![Game Demonstration](static/demo/demo.gif)
 
 ## General info
-More detail about the project, functionality and code.
+A word is selected at random from a list of Landmark-themed words (see below) and displayed as a number of blanks. It is the role of the player to guess the word by suggesting letters. You are allowed five incorrect guesses before the game ends. You can restart the game at any time by requesting a new word using the blue button. The number of incorrect guesses (marked as Xs) and lives remaining are displayed beneath the letters.
+
+The game accepts user input from the keyboard as well as the letters on-screen. Correct guesses will turn the corresponding letter green, incorrect guesses will turn the letter grey. You cannot guess the same letter twice. Cases are insensitive.
 
 List of example words:
 ```
@@ -21,12 +23,9 @@ survey
 technology
 ```
 
-## How to Play
-Keyboard and buttons
-
 ## Technologies
-The project is created solely with:
+The project is created with:
 * HTML5
-* Sass (CSS)
+* Sass (CSS), and
 * JavaScript
 
