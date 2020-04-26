@@ -20,17 +20,26 @@ test("Arguments are passed to the game", () => {
     expect(hangman.lives).toEqual(5);
 });
 
+test("Default values are taken if no arguments provided", () => {
+    const hangman = new Hangman();
+    hangman.reset();
+    expect(hangman.words).toEqual(["error"]);
+    expect(hangman.lives).toEqual(5);
+});
+
 test("Word is split into a string of capital letters", () => {
     const hangman = new Hangman(["apple"], 8);
     hangman.setNewWord();
     expect(hangman.lettersToGuess).toEqual(["A", "P", "P", "L", "E"]);
 });
 
-test("Starts after reset()", () => {
+test("Starts after call", () => {
     const hangman = new Hangman(["apple", "orange", "pear"], 5);
     expect(hangman.wordToGuess).toBeUndefined();
+    expect(() => hangman.guess("A")).toThrow();
     hangman.reset();
     expect(hangman.wordToGuess).not.toBeUndefined();
+    expect(() => hangman.guess("A")).not.toThrow();
 });
 
 test("A word is selected", () => {

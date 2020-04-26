@@ -2,8 +2,8 @@ import UI from "./UI.js";
 
 export default class Hangman {
     constructor(words, lives) {
-        this.words = words;
-        this.lives = lives;
+        this.words = words || ["error"];
+        this.lives = lives || 5;
 
         this.ui = new UI(this);
     }
