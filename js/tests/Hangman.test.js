@@ -1,4 +1,4 @@
-import Hangman from "./Hangman.js";
+import Hangman from "../Hangman.js";
 
 window.alert = jest.fn();
 document.body.innerHTML = `
@@ -23,8 +23,8 @@ test("Arguments are passed to the game", () => {
 test("Default values are taken if no arguments provided", () => {
     const hangman = new Hangman();
     hangman.reset();
-    expect(hangman.words).toEqual(["error"]);
-    expect(hangman.lives).toEqual(5);
+    expect(hangman.words).toEqual(["hangman"]);
+    expect(hangman.lives).toEqual(6);
 });
 
 test("Word is split into a string of capital letters", () => {
@@ -38,13 +38,15 @@ test("Starts after call", () => {
     expect(hangman.wordToGuess).toBeUndefined();
     expect(() => hangman.guess("A")).toThrow();
     hangman.reset();
-    expect(hangman.wordToGuess).not.toBeUndefined();
+    expect(hangman.wordToGuess).toBeDefined();
     expect(() => hangman.guess("A")).not.toThrow();
 });
 
-test("A word is selected", () => {
+test("A new word is selected", () => {
     const hangman = new Hangman(["apple", "orange", "pear"], 5);
     hangman.reset();
+    expect(hangman.wordIsUnchanged("coconut")).toBeFalsy();
+    expect(hangman.wordIsUnchanged(hangman.wordToGuess)).toBeTruthy();
     expect(["apple", "orange", "pear"]).toContain(hangman.wordToGuess);
 });
 
@@ -75,7 +77,7 @@ test("Guesses are handled correctly", () => {
 test("Guesses are identified as correct or incorrect", () => {
     const hangman = new Hangman(["apple", "orange", "pear"], 5);
     hangman.reset();
-    expect(hangman.guessIsCorrect("Q")).not.toBeTruthy();
+    expect(hangman.guessIsCorrect("Q")).toBeFalsy();
     expect(hangman.guessIsCorrect("A")).toBeTruthy();
 });
 
@@ -98,11 +100,11 @@ test("Returns the positions of a letter in the word", () => {
 test("Determines if a player has lost", () => {
     const hangman = new Hangman(["apple", "orange", "pear"], 5);
     hangman.reset();
-    expect(hangman.playerHasLost).not.toBeTruthy();
+    expect(hangman.playerHasLost).toBeFalsy();
     hangman.setGuessesTo(5);
     expect(hangman.playerHasLost).toBeTruthy();
     hangman.setGuessesTo(4);
-    expect(hangman.playerHasLost).not.toBeTruthy();
+    expect(hangman.playerHasLost).toBeFalsy();
     hangman.setGuessesTo(20);
     expect(hangman.playerHasLost).toBeTruthy();
 });
@@ -110,9 +112,9 @@ test("Determines if a player has lost", () => {
 test("Determines if a player has won", () => {
     const hangman = new Hangman(["pasta", "tapas"], 5);
     hangman.reset();
-    expect(hangman.playerHasWon).not.toBeTruthy();
+    expect(hangman.playerHasWon).toBeFalsy();
     hangman.guess("A");
-    expect(hangman.playerHasWon).not.toBeTruthy();
+    expect(hangman.playerHasWon).toBeFalsy();
     hangman.guess("P");
     hangman.guess("S");
     hangman.guess("T");

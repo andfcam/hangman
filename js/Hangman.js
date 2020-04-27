@@ -2,8 +2,8 @@ import UI from "./UI.js";
 
 export default class Hangman {
     constructor(words, lives) {
-        this.words = words || ["error"];
-        this.lives = lives || 5;
+        this.words = words || ["hangman"];
+        this.lives = lives || 6;
 
         this.ui = new UI(this);
     }
@@ -16,14 +16,23 @@ export default class Hangman {
     };
 
     setNewWord = () => {
-        this.wordToGuess = this.selectRandomWordFrom(this.words);
+        this.wordToGuess = this.selectRandomWord();
         this.lettersToGuess = this.wordToGuess.toUpperCase().split("");
         this.ui.generateBlanks();
     };
 
-    selectRandomWordFrom = (words) => {
-        const random = Math.floor(Math.random() * words.length);
-        return words[random];
+    selectRandomWord = () => {
+        const random = Math.floor(Math.random() * this.words.length);
+        const word = this.words[random];
+        return this.wordIsUnchanged(word) ? this.selectRandomWord() : word;
+    };
+
+    wordIsUnchanged = (word) => {
+        return (
+            typeof this.wordToGuess !== "undefined" &&
+            this.words.length > 1 &&
+            word === this.wordToGuess
+        );
     };
 
     get numberOfLetters() {
@@ -76,8 +85,3 @@ export default class Hangman {
         alert(message);
     };
 }
-
-// README
-
-// Make repo public
-// Send to Ben
