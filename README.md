@@ -1,5 +1,6 @@
 # Hangman
-A basic implementation of Hangman in JavaScript as described by the Landmark Solutions tech test.
+An implementation of Hangman in JavaScript for the Landmark Solutions tech test.
+
 You can play here: https://andfcam.github.io/hangman/
 
 ![Game Demonstration](static/demo/demo.gif)
